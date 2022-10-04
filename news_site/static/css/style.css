@@ -15,3 +15,7 @@ button {
     padding: 0;
     color: #CC0000;
 }
+
+.list-group > ul > li > a {
+    color: #26b246;
+}
