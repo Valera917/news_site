@@ -83,3 +83,7 @@ class CreateNews(LoginRequiredMixin, CreateView):
     template_name = 'news/add_news.html'
     # success_url = reverse_lazy('home')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление новости'
+        return context

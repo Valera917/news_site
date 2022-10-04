@@ -25,9 +25,12 @@ class UserLoginForm(AuthenticationForm):
 
 
 class NewsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].empty_label = 'Category does not chosen'
+
     class Meta:
         model = News
-        # fields = '__all__'
         fields = ['title', 'content', 'is_published', 'category']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
