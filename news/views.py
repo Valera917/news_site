@@ -1,9 +1,42 @@
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.contrib.auth import login
 
 from .models import News, Category
-from .forms import NewsForm
+from .forms import NewsForm, UserRegisterForm, UserLoginForm
+
+
+class RegisterUser(CreateView):
+    form_class = UserRegisterForm
+    template_name = 'news/register.html'
+    redirect_authenticated_user = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Registration'
+        return context
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(LoginView):
+    form_class = UserLoginForm
+    template_name = 'news/login.html'
+    redirect_authenticated_user = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Authorization'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 class HomeNews(ListView):

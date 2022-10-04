@@ -1,3 +1,17 @@
 body{
     background-color: #fefefe;
 }
+
+h1 {
+    margin-bottom: 25px;
+}
+
+button {
+    margin-bottom: 10px;
+}
+
+.form-error ul {
+    list-style: none;
+    padding: 0;
+    color: #CC0000;
+}
